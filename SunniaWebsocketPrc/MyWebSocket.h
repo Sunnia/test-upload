@@ -15,7 +15,10 @@
 @private WebSocket* ws;
 }
 @property (nonatomic, readonly) WebSocket* ws;
+@property (nonatomic, strong) UIViewController* parent;
 
-- (void) startMyWebSocket;
+
+- (void) startMyWebSocket:(UIViewController *)parent;
+- (void) sendMessage :(NSString*) aMessage;
 
 @end

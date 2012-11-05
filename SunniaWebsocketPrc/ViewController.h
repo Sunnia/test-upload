@@ -11,6 +11,15 @@
 
 @interface ViewController : UIViewController
 
+@property (strong, nonatomic) IBOutlet UIButton *buttonRequest;
+@property (strong, nonatomic) IBOutlet UITextView *textOutput;
 @property MyWebSocket *mws;
+
+
+
+- (IBAction)buttonRequestClickHandler:(id)sender;
+
+- (BOOL)ReciveMessage:(NSString*) aMessage;
+
 
 @end

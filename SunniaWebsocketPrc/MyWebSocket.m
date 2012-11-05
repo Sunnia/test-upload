@@ -7,6 +7,7 @@
 //
 
 #import "MyWebSocket.h"
+#import "ViewController.h"
 
 @implementation MyWebSocket
 
@@ -14,13 +15,21 @@
 @synthesize ws;
 
 #pragma mark Web Socket
-- (void) startMyWebSocket
+- (void) startMyWebSocket:(UIViewController *)parent
 {
+    self.parent=parent;
+    NSLog(@"Socket is opening");
     [self.ws open];
     
     //continue processing other stuff
     //...
 }
+- (void) sendMessage :(NSString*) aMessage
+{
+    [self.ws sendText:aMessage];
+}
+
+
 #pragma mark Lifecycle
 - (id)init
 {
@@ -29,7 +38,7 @@
     {
         //make sure to use the right url, it must point to your specific web socket endpoint or the handshake will fail
         //create a connect config and set all our info here
-        WebSocketConnectConfig* config = [WebSocketConnectConfig configWithURLString:@"ws://localhost:8080/testws/ws/test" origin:nil protocols:nil tlsSettings:nil headers:nil verifySecurityKey:YES extensions:nil ];
+        WebSocketConnectConfig* config = [WebSocketConnectConfig configWithURLString:@"ws://echo.websocket.org" origin:nil protocols:nil tlsSettings:nil headers:nil verifySecurityKey:YES extensions:nil ];
         config.closeTimeout = 15.0;
         config.keepAlive = 15.0; //sends a ws ping every 15s to keep socket alive
         
@@ -74,6 +83,9 @@
 {
     //Hooray! I got a message to print.
     NSLog(@"Did receive message: %@", aMessage);
+    ViewController* a = (ViewController*)self.parent;
+    [a ReciveMessage:aMessage];
+    
 }
 
 /**
